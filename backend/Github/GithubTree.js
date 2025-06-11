@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 import extractImports from '../ImportParsers/Javascript_importParser.js';
 
-dotenv.config({ path: '../.env' });
+dotenv.config();
 
 class Node {
   constructor(data = {}, children = []) {
@@ -12,6 +12,7 @@ class Node {
 }
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN 
+console.log(GITHUB_TOKEN);
 if (!GITHUB_TOKEN) {
   console.error(' GITHUB_TOKEN is missing');
   process.exit(1);

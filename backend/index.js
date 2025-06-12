@@ -11,17 +11,15 @@ app.use(express.json());
 
 const port = process.env.PORT || 8000
 
-const corsOptions = {
-    origin: process.env.CORS_ORIGIN,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: false,
-  };
+console.log('Cors',process.env.CORS_ORIGIN);
 
-app.use(cors(corsOptions)); 
+app.use(cors()); 
+
+
+
 
 app.get('/', (req, res) => {
-  res.send('Welcome to CodeOrbit API');
+  res.send('Welcome');
 });
 
 app.post('/api/query',  getDocument);

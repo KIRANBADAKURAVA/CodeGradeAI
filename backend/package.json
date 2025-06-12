@@ -12,6 +12,7 @@
   "dependencies": {
     "@babel/parser": "^7.27.5",
     "@babel/traverse": "^7.27.4",
+    "@heroicons/react": "^2.2.0",
     "@huggingface/inference": "^2.8.1",
     "@langchain/community": "^0.3.45",
     "@langchain/core": "^0.3.57",

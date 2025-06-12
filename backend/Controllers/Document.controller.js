@@ -45,7 +45,7 @@ export const getDocument = AsyncHandler(async (req, res) => {
         data: JSON.stringify(sortedNodes),
         createdAt: new Date(),
       });
-      await cacheData.save();
+      await cacheData.save({validateBeforeSave: false});
       console.log('Cache saved for URL:', url);
     }
 
@@ -68,7 +68,7 @@ export const getDocument = AsyncHandler(async (req, res) => {
   let combinedCodeSummary = answers.map((res) => res.answer).join('\n\n');
 
   combinedCodeSummary = '\n\n### Markeddown Documentation:\n\n' + md + '\n\n' + combinedCodeSummary;
-  console.log(combinedCodeSummary);
+  //console.log(combinedCodeSummary);
 
   const docLLM = new DocumentLLM({
     codeSummary: combinedCodeSummary,
@@ -77,11 +77,13 @@ export const getDocument = AsyncHandler(async (req, res) => {
   await docLLM.init();
   const finalOutput = await docLLM.run('Review the code');
   console.log('\n📘 Final Project Documentation:\n');
+  const output= JSON.parse(finalOutput.documentation);
   console.log(finalOutput.documentation);
 
+  
   res.status(200).json(
     new ApiResponse(200, {
-      output: finalOutput.documentation,
+      output: output, 
       codeSummary: combinedCodeSummary,
     }, 'Documentation generated successfully')
   );

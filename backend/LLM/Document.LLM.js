@@ -87,6 +87,7 @@ class DocumentLLM {
         "remarks": "<summary including how basic or complex the logic is, and mention of file names and paths where important logic is found>"
       }}
       
+      ### Important Note: The JSON response must be well-formed and valid. Do not include any additional text, explanations, or formatting.
       ### Code Context:
       {context}
       

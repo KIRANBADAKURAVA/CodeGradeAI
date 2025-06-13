@@ -2,6 +2,9 @@
 
 **CodeGradeAI** is an AI-powered assistant for intelligent codebase evaluation. It helps developers and teams receive automated insights on the structure, quality, and maintainability of their repositories using advanced LLMs.
 
+
+🌐 **Live Demo**: [https://code-grade-ai-v6sx.vercel.app/](https://code-grade-ai-v6sx.vercel.app/)
+
 ## 🧠 How It Works
 
 ![CodeGradeAI Architecture](./Pipeline.png)

@@ -85,9 +85,15 @@ class DocumentLLM {
         }},
         "overall_score": <calculated_score>,
         "remarks": "<summary including how basic or complex the logic is, and mention of file names and paths where important logic is found>"
+        "suggestions": "<any suggestions for improvement in aprroch >"
       }}
       
-      ### Important Note: The JSON response must be well-formed and valid. Do not include any additional text, explanations, or formatting.
+      ### Important Notes: 
+      The JSON response must be well-formed and valid. Do not include any additional text, explanations, or formatting.
+      Make sure the Remarks section includes:
+      - How basic or complex the overall logic is.
+      - Important file names and paths where core logic is found.
+      - Eplain detailed Approach to the codebase.
       ### Code Context:
       {context}
       

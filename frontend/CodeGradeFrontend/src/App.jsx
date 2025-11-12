@@ -180,7 +180,11 @@ const App = () => {
         <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-8 mb-8">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-white mb-4">Analyze Your Repository</h2>
-            <p className="text-purple-300">Enter a GitHub repository URL to get detailed code quality insights</p>
+            <p className="text-purple-300 mb-3">Enter a JavaScript/TypeScript GitHub repository URL to get detailed code quality insights</p>
+            <div className="inline-flex items-center space-x-2 px-4 py-2 bg-yellow-500/20 border border-yellow-500/30 rounded-lg text-yellow-300 text-sm">
+              <AlertCircle className="w-4 h-4" />
+              <span><strong>Note:</strong> Currently supports JavaScript repositories only (.js.jsx, files)</span>
+            </div>
           </div>
           
           <div className="flex flex-col md:flex-row gap-4 max-w-4xl mx-auto">
@@ -190,7 +194,7 @@ const App = () => {
                 type="text"
                 value={githubUrl}
                 onChange={(e) => setGithubUrl(e.target.value)}
-                placeholder="https://github.com/username/repository"
+                placeholder="https://github.com/username/js-repository"
                 className="w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 onKeyPress={(e) => e.key === 'Enter' && analyzeRepository()}
               />
@@ -277,8 +281,11 @@ const App = () => {
               <FileCode className="w-12 h-12 text-purple-400" />
             </div>
             <h3 className="text-2xl font-semibold text-white mb-4">Ready to Analyze</h3>
-            <p className="text-purple-300 max-w-md mx-auto">
-              Enter a GitHub repository URL above to get started with intelligent code analysis and quality insights.
+            <p className="text-purple-300 max-w-md mx-auto mb-2">
+              Enter a JavaScript/TypeScript GitHub repository URL above to get started with intelligent code analysis and quality insights.
+            </p>
+            <p className="text-purple-400 text-sm max-w-md mx-auto">
+              Currently supports repositories with .js, .ts, .jsx, and .tsx files only.
             </p>
           </div>
         )}

@@ -61,7 +61,7 @@ const App = () => {
       // Construct the API URL for the repository contents
       const apiUrl = `https://api.github.com/repos/${info.owner}/${info.repo}/contents`;
       
-      const response = await fetch('https://codegradeai-1.onrender.com/api/query', {
+      const response = await fetch('https://codegradeai-2.onrender.com/api/query', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

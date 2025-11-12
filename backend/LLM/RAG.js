@@ -1,8 +1,7 @@
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
-import { MemoryVectorStore } from "langchain/vectorstores/memory";
+import { MemoryVectorStore } from "./MemoryVectorStore.js";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
-import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
-import { createRetrievalChain } from "langchain/chains/retrieval";
+import { createStuffDocumentsChain, createRetrievalChain } from "./chains.js";
 import { ChatGroq } from "@langchain/groq";
 import { Document } from "@langchain/core/documents";
 import { parse } from "@babel/parser";
@@ -11,7 +10,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: "../.env" });
 
 class FileWiseLLM {
-  constructor({ model = "llama3-8b-8192", sortedNodes, kDocuments = 5 }) {
+  constructor({ model = "llama-3.1-8b-instant", sortedNodes, kDocuments = 5 }) {
     this.model = model;
     this.sortedNodes = sortedNodes;
     this.kDocuments = kDocuments;
@@ -30,7 +29,7 @@ class FileWiseLLM {
 
     this.prompt = ChatPromptTemplate.fromTemplate(`
 You are a code analysis assistant. You will be given code from a **single file**, chunked for vector-based retrieval. Use the provided context to understand the code and answer the user's question.
-You can use genral programming knowledge, but focus on the code provided in the context.
+You can use general programming knowledge, but focus on the code provided in the context.
 
 Use the following structure in your response:
 
@@ -71,8 +70,6 @@ Summarize what this file does overall in 2–3 sentences, as if you're explainin
 ---
 
 Use clear bullet points or markdown formatting where needed. If any part is missing due to chunking, indicate that with a note like “⛔ Incomplete context”.
-
-
     `);
 
     this.combineDocsChain = await createStuffDocumentsChain({
@@ -99,12 +96,15 @@ Use clear bullet points or markdown formatting where needed. If any part is miss
     const documents = chunks.map(
       (chunk) =>
         new Document({
-          metadata: { file: node.file , path: node.path },  
+          metadata: { file: node.file, path: node.path },
           pageContent: chunk,
         })
     );
 
-    const vectorStore = await MemoryVectorStore.fromDocuments(documents, this.embeddings);
+    const vectorStore = await MemoryVectorStore.fromDocuments(
+      documents,
+      this.embeddings
+    );
     const retriever = vectorStore.asRetriever({ k: this.kDocuments });
 
     const chain = await createRetrievalChain({

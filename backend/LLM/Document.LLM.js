@@ -1,16 +1,17 @@
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
-import { MemoryVectorStore } from "langchain/vectorstores/memory";
+import { MemoryVectorStore } from "./MemoryVectorStore.js";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
-import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
-import { createRetrievalChain } from "langchain/chains/retrieval";
+import { createStuffDocumentsChain, createRetrievalChain } from "./chains.js";
 import { ChatGroq } from "@langchain/groq";
 import { CharacterTextSplitter } from "@langchain/textsplitters";
 import dotenv from "dotenv";
 
 dotenv.config({ path: "../.env" });
 
+ console.log(process.env.HUGGINGFACE_API_KEY)
+
 class DocumentLLM {
-  constructor({ model = "llama3-8b-8192", codeSummary, kDocuments = 5 }) {
+  constructor({ model = "llama-3.1-8b-instant", codeSummary, kDocuments = 5 }) {
     this.model = model;
     this.rawCode = codeSummary;
     this.kDocuments = kDocuments;
@@ -20,6 +21,7 @@ class DocumentLLM {
     this.embeddings = new HuggingFaceInferenceEmbeddings({
       model: "BAAI/bge-base-en-v1.5",
       apiKey: process.env.HUGGINGFACE_API_KEY,
+      apiUrl: "https://router.huggingface.co/hf-inference"
     });
 
     this.llm = new ChatGroq({
